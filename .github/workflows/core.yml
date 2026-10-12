@@ -1,0 +1,29 @@
+name: Core contracts
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+      - run: uv sync --frozen
+      - run: uv run --frozen python scripts/check_docs.py
+      - run: uv run --frozen python scripts/check_core.py
+      - run: uv run --frozen python examples/offline_react.py
+      - run: uv build --wheel --out-dir dist
+      - run: uv run --frozen python scripts/check_core.py --wheel dist/stategrid_agent_core-0.2.0-py3-none-any.whl
