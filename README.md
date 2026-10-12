@@ -1,5 +1,7 @@
 # Agent Core
 
+[![Core contracts](https://github.com/cont1nu1ty/agent_core/actions/workflows/core.yml/badge.svg)](https://github.com/cont1nu1ty/agent_core/actions/workflows/core.yml)
+
 **一个可嵌入业务应用的 Python Agent 运行内核。**
 
 围绕一次 Run，提供异步流式执行、工具治理、预算、取消、checkpoint 恢复，以及 ReAct / Plan-and-Execute 组合。业务应用通过显式依赖注入提供模型、权限、持久化和领域策略。
